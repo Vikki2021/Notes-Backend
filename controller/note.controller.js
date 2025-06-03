@@ -16,7 +16,7 @@ export const addNote = async (req, res, next) => {
   }
 
   if (!user_mail) {
-    console.log("mail",user_mail);
+    // console.log("mail",user_mail);
     return next(errorHandler(402, "User mail is required"));
   }
   try {
@@ -41,7 +41,7 @@ export const addNote = async (req, res, next) => {
 }
 
 export const editNote = async (req, res, next) => {
-  console.log(req.params);
+  // console.log(req.params);
   const note = await Note.findById(req.params.noteId)
   // console.log(note);
 
@@ -49,7 +49,7 @@ export const editNote = async (req, res, next) => {
     return next(errorHandler(404, "Note not found"))
   }
   const { title, content, tags, user_mail } = req.body
-  console.log(title,content,tags,user_mail);
+  // console.log(title,content,tags,user_mail);
   if (!title && !content) {
     return next(errorHandler(404, "No changes provided"))
   }
@@ -61,7 +61,7 @@ export const editNote = async (req, res, next) => {
       tags:tags || [],
       userMail:user_mail,
     });
-   console.log(temp);
+  //  console.log(temp);
     res.status(200).json({
       success: true,
       message: "Note updated successfully",
@@ -84,7 +84,7 @@ export const getAllNotes = async (req, res, next) => {
     // console.log(req.headers);
     // console.log(user_mail);
     const notes = await Note.find({ userMail:user_mail }).sort({ isPinned: -1 })
-    console.log("notes:",notes);
+    // console.log("notes:",notes);
     res.status(200).json({
       success: true,
       message: "All notes retrived successfully",
@@ -129,7 +129,7 @@ export const updateNotePinned = async (req, res, next) => {
     if (!note) {
       return next(errorHandler(404, "Note not found!"))
     }
-    else console.log(note);
+    // else console.log(note);
 
     // if (req.user.id !== note.userId) {
     //   return next(errorHandler(401, "You can only update your own note!"))
@@ -140,7 +140,7 @@ export const updateNotePinned = async (req, res, next) => {
     note.isPinned = isPinned
 
     await note.save()
-    console.log(note);
+    // console.log(note);
 
     res.status(200).json({
       success: true,
