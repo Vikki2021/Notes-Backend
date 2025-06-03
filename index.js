@@ -6,7 +6,8 @@ import cors from "cors"
 dotenv.config()
 
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI,{
+  })
   .then(() => {
     console.log("Connected to mongoDB")
   })
@@ -18,7 +19,9 @@ const app = express()
 
 // to make input as json
 app.use(express.json())
-app.use(cors({ origin: ["http://localhost:5173"], credentials: true }))
+app.use(cors({ origin: "https://notes-frontend-sable.vercel.app", methods:["GET","POST","PUT","PATCH","DELETE"],
+  allowedHeaders:["Content-Type","Authorization"]
+  ,credentials: true }))
 // app.use(cors());
 
 app.listen(5000, () => {
